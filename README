@@ -1,0 +1,23 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=477
+
+a very basic python compiler script. The last line of errorformat 
+              \%-G%.%#
+is meant to suppress all  further error messages after the traceback has been dealt with so that it will be possible to use :clast to go to the last error location which in most cases in Python is the one that has caused the error to happen. 
+Please note that if python is not in the path you have to edit the line 
+setlocal makeprg=python
+so that it contains the path of the python interpreter (e.g. c:\python22\python).
+Also, if you want always to make the current file you may wish to add  a
+\ %
+to the same line, so that:
+setlocal makeprg=python
+should then look like:
+setlocal makeprg=python\ %
+(Thanks to Guy Oliver for this tip).
+
+If you want to syntaxcheck the current python file without executing it, you could use the following function (from python_box.vim):
+
+function! CheckPythonSyntax()
+  let curfile = bufname("%")
+  exec ":make " . "-c " . "\"import py_compile; py_compile.compile(r'" . bufname("%") . "')\""
+endfunction
+
